@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact & Apply — ANSTA</title>
+<link rel="icon" href="assets/ansta-logo.png">
+<link rel="stylesheet" href="_ds/modernist-32856cb4-b002-45f9-a11b-0abe574b30f3/styles.css">
+<style>
+:root{--color-accent:#12807e;--color-accent-600:#0e6b69;--color-accent-700:#0b5250;--color-accent-100:#e7f4f3;--color-accent-200:#c9e6e4;--color-accent-300:#9fd3d0;--navy:#0f2c44;--gold:#c79218;--teal:#12807e;--wrap:1200px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:"Archivo",system-ui,sans-serif}
+a{color:var(--color-accent-700)}a:hover{color:var(--color-accent)}
+a.btn-primary,a.btn-primary:hover,a.btn-primary:focus{color:var(--color-bg)}
+[data-reveal]{opacity:0;transform:translateY(32px) scale(.99);filter:blur(3px);transition:opacity .75s cubic-bezier(.2,.7,.2,1),transform .75s cubic-bezier(.2,.7,.2,1),filter .75s ease}
+[data-reveal][data-seen]{opacity:1;transform:none;filter:none}
+[data-reveal][data-stag]{opacity:1!important;transform:none!important;filter:none!important;transition:none}
+[data-sc="0"]{opacity:0;transform:translateY(28px) scale(.985);transition:opacity .6s cubic-bezier(.2,.7,.2,1),transform .6s cubic-bezier(.2,.7,.2,1)}
+[data-sc="in"]{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){[data-reveal],[data-sc="0"]{opacity:1!important;transform:none!important;filter:none!important;transition:none}html{scroll-behavior:auto}}
+@media(max-width:920px){.navbar{flex-wrap:wrap!important;row-gap:10px!important}[style*="repeat(5,1fr)"]{grid-template-columns:repeat(3,1fr)!important}[style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}[style*="repeat(3,1fr)"]{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:680px){[style*="repeat(5,1fr)"]{grid-template-columns:repeat(2,1fr)!important}[style*="repeat(3,1fr)"]{grid-template-columns:1fr!important}[style*="repeat(2,1fr)"]{grid-template-columns:1fr!important}[style*="1fr 1fr"]{grid-template-columns:1fr!important}[style*="minmax(0,"]{grid-template-columns:1fr!important}[style*="1.6fr 1fr 1.2fr"]{grid-template-columns:1fr!important}[style*="border-right:2px solid var(--color-divider)"]{border-right:none!important}}
+.navbar{transition:padding .28s ease,box-shadow .28s ease,background .28s ease}
+.navbar[data-scrolled]{padding-top:8px!important;padding-bottom:8px!important;box-shadow:0 3px 10px color-mix(in srgb,#2d2b2b 16%,transparent);background:color-mix(in srgb,var(--color-bg) 88%,#fff)}
+.lift{transition:transform .18s cubic-bezier(.2,.7,.2,1),box-shadow .18s,background .18s,border-color .18s}
+.fld{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+.fld label{font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--navy)}
+.inp{font-family:"Archivo";font-size:15px;color:var(--navy);background:var(--color-bg);border:2px solid var(--color-divider);padding:12px 14px;width:100%;transition:border-color .18s}
+.inp:focus{outline:none;border-color:var(--teal)}
+textarea.inp{resize:vertical;min-height:120px}
+.contact-link{display:flex;gap:14px;align-items:flex-start;color:var(--navy);text-decoration:none;padding:16px 0;border-top:1.5px solid var(--color-divider);transition:color .18s}
+.contact-link:hover{color:var(--teal)}
+.contact-link:hover .ci{border-color:var(--teal);background:var(--teal);color:#fff}
+.ci{flex:none;width:40px;height:40px;border:2px solid var(--color-divider);display:flex;align-items:center;justify-content:center;transition:.18s}
+.lift:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-ghost.lift:hover{background:rgba(255,255,255,.12)}
+</style>
+</head>
+<body>
+<div style="position:fixed;top:0;left:0;height:3px;background:var(--teal);width:var(--scrollp,0%);z-index:60"></div>
+
+<nav class="navbar" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:16px clamp(20px,5vw,64px);border-bottom:2px solid var(--color-divider);background:color-mix(in srgb,var(--color-bg) 80%,#fff);backdrop-filter:blur(8px)">
+  <a href="Home.html" style="display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none"><img src="assets/ansta-logo.png" alt="ANSTA" style="height:40px;width:auto"><span style="font-family:var(--font-heading);font-weight:800;font-size:18px;letter-spacing:-.01em;color:var(--navy)">ANSTA</span></a>
+  <span style="display:flex;gap:26px;font-size:14px;font-weight:600;color:var(--navy)">
+    <a href="Home.html" style="color:var(--navy);text-decoration:none">Home</a>
+    <a href="About.html" style="color:var(--navy);text-decoration:none">About</a>
+    <a href="Courses.html" style="color:var(--navy);text-decoration:none">Courses</a>
+    <a href="Contact.html" style="color:var(--color-accent);text-decoration:none">Contact</a>
+  </span>
+  <a class="btn btn-primary lift" href="#apply" style="text-decoration:none">Apply Now</a>
+</nav>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:64px clamp(20px,5vw,64px) 0">
+  <span style="display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:22px" data-reveal><span style="width:10px;height:10px;background:var(--gold);display:inline-block"></span>Contact &amp; apply</span>
+  <h1 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(38px,5.4vw,64px);line-height:1.03;letter-spacing:-.025em;margin:0 0 26px;margin-left:-.04em;max-width:16ch;color:var(--navy)" data-reveal>Let's start your <span style="color:var(--color-accent)">clinical career.</span></h1>
+  <p style="font-size:clamp(16px,1.5vw,18px);line-height:1.62;max-width:60ch;color:color-mix(in srgb,var(--navy) 82%,transparent);margin:0 0 12px" data-reveal>Send an enquiry, book a campus visit, or ask about eligibility. Our office hours are Monday to Saturday, 9:00 AM – 6:00 PM.</p>
+</section>
+
+<section id="apply" style="max-width:var(--wrap);margin:0 auto;padding:48px clamp(20px,5vw,64px) 0">
+  <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:0;border:2px solid var(--color-divider)">
+    <div style="padding:clamp(28px,4vw,48px);border-right:2px solid var(--color-divider)" data-reveal>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:0 0 24px;color:var(--navy)">Enquiry form</h2>
+      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="return handleSubmit(event)">
+        <input type="hidden" name="_subject" value="New ANSTA website enquiry">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 18px">
+          <div class="fld"><label for="cf-name">Full name</label><input class="inp" id="cf-name" name="name" type="text" required placeholder="Your name"></div>
+          <div class="fld"><label for="cf-phone">Phone</label><input class="inp" id="cf-phone" name="phone" type="tel" required placeholder="+91 …"></div>
+        </div>
+        <div class="fld"><label for="cf-email">Email</label><input class="inp" id="cf-email" name="email" type="email" placeholder="you@email.com"></div>
+        <div class="fld"><label for="cf-course">Program you're interested in</label>
+          <select class="inp" id="cf-course" name="course">
+            <option>Ward Nursing (2 months)</option>
+            <option>ICU (3 months)</option>
+            <option>Operation Theatre (3 months)</option>
+            <option>Emergency / ER (2 months)</option>
+            <option>ANM Clinical Training (6 months)</option>
+            <option>Not sure yet — please advise</option>
+          </select>
+        </div>
+        <div class="fld"><label for="cf-msg">Message</label><textarea class="inp" id="cf-msg" name="message" placeholder="Tell us about your background (GNM / B.Sc / fresher / experienced) and what you'd like to train in."></textarea></div>
+        <button type="submit" class="btn btn-primary btn-block lift" style="width:100%;justify-content:center">Send Enquiry</button>
+        <div style="display:flex;align-items:center;gap:12px;margin:14px 0;color:color-mix(in srgb,var(--navy) 45%,transparent);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700"><span style="flex:1;height:1.5px;background:var(--color-divider)"></span>or<span style="flex:1;height:1.5px;background:var(--color-divider)"></span></div>
+        <button type="button" onclick="sendWhatsApp()" class="btn btn-block lift" style="width:100%;justify-content:center;gap:9px;background:#25d366;color:#08321d;border-color:#25d366;font-weight:800">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.8c2.16 0 4.19.84 5.72 2.37a8.05 8.05 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.1 8.09a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.12.82.83-3.04-.19-.31a8.03 8.03 0 0 1-1.24-4.32c0-4.46 3.63-8.09 8.1-8.09Zm4.68 10.24c-.26-.13-1.51-.74-1.74-.83-.23-.09-.4-.13-.57.13-.17.26-.65.83-.8 1-.15.17-.29.19-.55.06-.26-.13-1.08-.4-2.06-1.27-.76-.68-1.28-1.52-1.43-1.78-.15-.26-.02-.4.11-.53.12-.12.26-.29.39-.44.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44l-.49-.01c-.17 0-.44.06-.67.32-.23.26-.88.86-.88 2.1s.9 2.44 1.03 2.61c.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.51-.62 1.72-1.21.21-.6.21-1.11.15-1.21-.06-.11-.23-.17-.49-.3Z"/></svg>
+          Send on WhatsApp
+        </button>
+        <div id="form-status" style="display:none;margin-top:16px;padding:14px 16px;border:2px solid transparent;font-size:14px;font-weight:600"></div>
+        <p style="font-size:12px;color:color-mix(in srgb,var(--navy) 55%,transparent);margin:16px 0 0;line-height:1.5">WhatsApp opens a chat pre-filled with your details — just tap send. Or call us directly using the numbers on the right.</p>
+      </form>
+    </div>
+    <div style="padding:clamp(28px,4vw,48px);background:var(--navy);color:#fff" data-reveal>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:20px;margin:0 0 8px;color:#fff">Reach ANSTA</h2>
+      <p style="font-size:14px;color:rgba(255,255,255,.65);margin:0 0 10px;line-height:1.5">Advanced Nursing Skill Training Academy</p>
+      <div style="--color-divider:rgba(255,255,255,.18)">
+        <a class="contact-link" href="https://maps.google.com/?q=Wilson+Garden+Bengaluru" target="_blank" rel="noopener" style="border-top:none">
+          <span class="ci" style="color:var(--gold)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span><strong style="display:block;font-size:15px;color:#fff">Wilson Garden</strong><span style="font-size:13px;color:rgba(255,255,255,.7)">Bengaluru, Karnataka</span></span>
+        </a>
+        <a class="contact-link" href="tel:+919945694326"><span class="ci" style="color:var(--gold)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span><strong style="display:block;font-size:15px;color:#fff">+91 99456 94326</strong><span style="font-size:13px;color:rgba(255,255,255,.7)">+91 97408 88397 · +91 97408 22095</span></span></a>
+        <a class="contact-link" href="mailto:anstrainingacademy@gmail.com"><span class="ci" style="color:var(--gold)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span><span><strong style="display:block;font-size:15px;color:#fff">anstrainingacademy@gmail.com</strong><span style="font-size:13px;color:rgba(255,255,255,.7)">selvirags@gmail.com</span></span></a>
+        <div class="contact-link" style="cursor:default"><span class="ci" style="color:var(--gold)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span><span><strong style="display:block;font-size:15px;color:#fff">Mon – Sat · 9:00 AM – 6:00 PM</strong><span style="font-size:13px;color:rgba(255,255,255,.7)">Sunday: Closed</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:48px clamp(20px,5vw,64px) 0" data-reveal>
+  <a href="https://maps.google.com/?q=Wilson+Garden+Bengaluru" target="_blank" rel="noopener" class="grayscale" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:var(--color-surface);border:2px solid var(--color-divider);min-height:280px;color:var(--color-neutral-600);text-decoration:none">
+    <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+    <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">Map — Wilson Garden, Bengaluru · click to open</span>
+  </a>
+</section>
+
+<section style="background:var(--teal);margin-top:84px;color:#fff">
+  <div style="max-width:var(--wrap);margin:0 auto;padding:clamp(48px,7vw,88px) clamp(20px,5vw,64px)">
+    <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(32px,4.6vw,54px);line-height:1;letter-spacing:-.03em;margin:0 0 20px;margin-left:-.03em;color:#fff;max-width:18ch" data-reveal>Every great nurse trained somewhere. Train here.</h2>
+    <div style="display:flex;gap:12px;flex-wrap:wrap" data-reveal>
+      <a class="btn lift" href="Courses.html" style="background:#fff;color:var(--teal);text-decoration:none">Explore Courses</a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--navy);color:#fff">
+  <div style="max-width:var(--wrap);margin:0 auto;padding:64px clamp(20px,5vw,64px) 40px;display:grid;grid-template-columns:1.6fr 1fr 1.2fr;gap:40px">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><img src="assets/ansta-logo.png" alt="ANSTA" style="height:44px;width:auto;background:#fff;padding:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:20px">ANSTA</span></div>
+      <p style="font-size:14px;line-height:1.6;color:rgba(255,255,255,.7);max-width:38ch;margin:0">Advanced Nursing Skill Training Academy — bridging the gap between nursing education and professional practice.</p>
+    </div>
+    <div>
+      <h4 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 16px">Explore</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+        <a href="Home.html" style="color:#fff;text-decoration:none">Home</a>
+        <a href="About.html" style="color:#fff;text-decoration:none">About &amp; Founder</a>
+        <a href="Courses.html" style="color:#fff;text-decoration:none">Courses</a>
+        <a href="Contact.html" style="color:#fff;text-decoration:none">Contact &amp; Apply</a>
+      </div>
+    </div>
+    <div>
+      <h4 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 16px">Reach us</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:rgba(255,255,255,.85)">
+        <span>Wilson Garden, Bengaluru, Karnataka</span>
+        <a href="tel:+919945694326" style="color:#fff;text-decoration:none">+91 99456 94326</a>
+        <a href="mailto:anstrainingacademy@gmail.com" style="color:#fff;text-decoration:none">anstrainingacademy@gmail.com</a>
+        <span style="color:rgba(255,255,255,.6);margin-top:6px">Mon–Sat: 9:00 AM – 6:00 PM</span>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.15)"><div style="max-width:var(--wrap);margin:0 auto;padding:20px clamp(20px,5vw,64px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:rgba(255,255,255,.55)"><span>© 2026 ANSTA. All Rights Reserved.</span><span>Learn · Practice · Excel · Serve</span></div></div>
+</footer>
+<script src="site.js"></script>
+</body>
+</html>

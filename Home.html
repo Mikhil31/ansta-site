@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANSTA — Advanced Nursing Skill Training Academy</title>
+<link rel="icon" href="assets/ansta-logo.png">
+<link rel="stylesheet" href="_ds/modernist-32856cb4-b002-45f9-a11b-0abe574b30f3/styles.css">
+<style>
+:root{--color-accent:#12807e;--color-accent-600:#0e6b69;--color-accent-700:#0b5250;--color-accent-100:#e7f4f3;--color-accent-200:#c9e6e4;--color-accent-300:#9fd3d0;--navy:#0f2c44;--gold:#c79218;--teal:#12807e;--wrap:1200px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:"Archivo",system-ui,sans-serif;overflow-x:hidden}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent)}
+/* keep button label colors readable on hover (override the generic a:hover) */
+a.btn-primary,a.btn-primary:hover,a.btn-primary:focus{color:var(--color-bg)}
+a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-text)}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ===== scroll reveal (directional variants) ===== */
+[data-reveal]{opacity:0;transform:translateY(34px);filter:blur(4px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1),filter .8s ease;will-change:opacity,transform}
+[data-reveal="left"]{transform:translateX(-46px)}
+[data-reveal="right"]{transform:translateX(46px)}
+[data-reveal="scale"]{transform:scale(.92)}
+[data-reveal][data-seen]{opacity:1;transform:none;filter:none}
+[data-reveal][data-stag]{opacity:1!important;transform:none!important;filter:none!important;transition:none}
+[data-sc="0"]{opacity:0;transform:translateY(30px) scale(.985);transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+[data-sc="in"]{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){[data-reveal],[data-sc="0"]{opacity:1!important;transform:none!important;filter:none!important;transition:none}html{scroll-behavior:auto}.blob,.hero-badge-dot,.grad-text{animation:none!important}}
+
+/* ===== animated hero ===== */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero-aurora{position:absolute;inset:-30% -20% -10% -20%;z-index:-1;pointer-events:none;filter:blur(70px);opacity:.55}
+.blob{position:absolute;border-radius:50%;mix-blend-mode:multiply}
+.blob.b1{width:46vw;height:46vw;max-width:620px;max-height:620px;top:-8%;left:-6%;background:radial-gradient(circle at 30% 30%,#7fd6d2,transparent 68%);animation:drift1 20s ease-in-out infinite}
+.blob.b2{width:40vw;height:40vw;max-width:520px;max-height:520px;top:-14%;right:-8%;background:radial-gradient(circle at 60% 40%,#ffdd9e,transparent 66%);animation:drift2 24s ease-in-out infinite}
+.blob.b3{width:38vw;height:38vw;max-width:500px;max-height:500px;bottom:-24%;left:34%;background:radial-gradient(circle at 50% 50%,#bfeae7,transparent 68%);animation:drift3 27s ease-in-out infinite}
+@keyframes drift1{50%{transform:translate(40px,30px) scale(1.08)}}
+@keyframes drift2{50%{transform:translate(-46px,38px) scale(1.12)}}
+@keyframes drift3{50%{transform:translate(30px,-36px) scale(1.07)}}
+.hero-grid{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;background-image:linear-gradient(color-mix(in srgb,var(--navy) 6%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--navy) 6%,transparent) 1px,transparent 1px);background-size:52px 52px;-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 0,#000 40%,transparent 78%);mask-image:radial-gradient(ellipse 80% 70% at 50% 0,#000 40%,transparent 78%)}
+
+/* gradient shimmer headline */
+.grad-text{background:linear-gradient(100deg,var(--teal) 0%,var(--gold) 45%,var(--teal) 90%);background-size:220% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:220% center}}
+.hero-badge-dot{animation:pulse 2.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.35);opacity:.55}}
+
+/* ===== buttons: shine sweep + lift ===== */
+.lift{transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s,background .2s,border-color .2s}
+.lift:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.btn-ghost.lift:hover{background:rgba(255,255,255,.14)}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:"";position:absolute;top:-10%;left:-130%;width:55%;height:120%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-20deg);pointer-events:none}
+.shine:hover::after{animation:sweep .85s ease}
+@keyframes sweep{to{left:150%}}
+
+/* ===== big pill CTAs (fluid across phone/tablet/monitor) ===== */
+.btn-xl{font-size:clamp(15px,1.3vw,18px);padding:clamp(14px,1.5vw,20px) clamp(28px,3vw,44px);border-radius:999px;font-weight:800;letter-spacing:.01em;gap:10px}
+.btn-primary.btn-xl{box-shadow:0 8px 22px color-mix(in srgb,var(--teal) 38%,transparent);animation:cta-glow 3.2s ease-in-out infinite}
+.btn-primary.btn-xl:hover{box-shadow:0 14px 34px color-mix(in srgb,var(--teal) 50%,transparent)}
+@keyframes cta-glow{0%,100%{box-shadow:0 8px 22px color-mix(in srgb,var(--teal) 34%,transparent)}50%{box-shadow:0 10px 30px color-mix(in srgb,var(--teal) 55%,transparent)}}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:520px){.cta-row{width:100%}.cta-row .btn-xl{flex:1 1 100%;width:100%}}
+
+/* ===== decorative rotating rings / orbits (dynamic sizing) ===== */
+.ring{position:absolute;border-radius:50%;pointer-events:none;z-index:-1}
+.ring-dash{border:2px dashed color-mix(in srgb,var(--teal) 28%,transparent);animation:spin 42s linear infinite}
+.orbit{animation:spin 26s linear infinite}
+.orbit::before{content:"";position:absolute;top:-8px;left:50%;width:15px;height:15px;margin-left:-7.5px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 6px color-mix(in srgb,var(--gold) 22%,transparent)}
+.orbit.slow{animation-duration:34s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.floaty{animation:floaty 8s ease-in-out infinite}
+@keyframes floaty{50%{transform:translateY(-18px)}}
+@media(prefers-reduced-motion:reduce){.ring-dash,.orbit,.floaty,.btn-primary.btn-xl{animation:none!important}}
+@media(max-width:600px){.ring{opacity:.35!important}}
+
+/* ===== navbar ===== */
+.navbar{transition:padding .28s ease,box-shadow .28s ease,background .28s ease}
+.navbar[data-scrolled]{padding-top:8px!important;padding-bottom:8px!important;box-shadow:0 3px 14px color-mix(in srgb,#2d2b2b 16%,transparent);background:color-mix(in srgb,var(--color-bg) 90%,#fff)}
+.navlinks a{position:relative}
+.navlinks a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--teal);transition:width .28s cubic-bezier(.2,.7,.2,1)}
+.navlinks a:hover::after,.navlinks a[aria-current]::after{width:100%}
+
+/* ===== feature checklist — hover fill ===== */
+.feat{position:relative;overflow:hidden;transition:color .25s}
+.feat::before{content:"";position:absolute;inset:0;background:var(--color-accent-100);transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.2,.7,.2,1);z-index:0}
+.feat>*{position:relative;z-index:1}
+.feat:hover::before{transform:scaleX(1)}
+.feat:hover .tick{transform:scale(1.15) rotate(-6deg)}
+.tick{transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+
+/* ===== course cards ===== */
+.cardlink{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,border-color .25s;transform-style:preserve-3d}
+.cardlink:hover{box-shadow:0 18px 44px color-mix(in srgb,#2d2b2b 22%,transparent);border-color:var(--teal)}
+.cardlink:hover .arrow{transform:translateX(5px);color:var(--teal)}
+.arrow{transition:transform .2s,color .2s}
+
+/* ===== marquee ===== */
+.marquee{overflow:hidden;background:var(--navy);position:relative}
+.marquee::before,.marquee::after{content:"";position:absolute;top:0;width:90px;height:100%;z-index:2;pointer-events:none}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--navy),transparent)}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--navy),transparent)}
+.marquee-track{display:flex;white-space:nowrap;animation:marq 26s linear infinite}
+.marquee:hover .marquee-track{animation-play-state:paused}
+
+/* ===== method 'own it' underline ===== */
+.own{position:relative;color:var(--teal)}
+.own::after{content:"";position:absolute;left:0;bottom:2px;width:0;height:8px;background:color-mix(in srgb,var(--gold) 55%,transparent);z-index:-1;transition:width .7s cubic-bezier(.2,.7,.2,1) .3s}
+[data-seen] .own::after{width:100%}
+
+/* ===== step / grid cell hover ===== */
+.step{transition:background .25s,transform .25s}
+.step:hover{background:color-mix(in srgb,var(--teal) 6%,transparent);transform:translateY(-3px)}
+
+.faq{border-top:2px solid var(--color-divider)}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:24px 0;font-family:"Archivo";font-weight:800;font-size:20px;color:var(--navy);letter-spacing:-.01em;transition:color .2s}
+.faq summary:hover{color:var(--teal)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{margin-left:auto;flex:none;width:26px;height:26px;position:relative;transition:transform .3s}
+.faq summary .pm::before,.faq summary .pm::after{content:"";position:absolute;background:var(--teal);inset:0;margin:auto}
+.faq summary .pm::before{width:100%;height:2px}
+.faq summary .pm::after{width:2px;height:100%;transition:transform .3s}
+.faq[open] summary .pm::after{transform:scaleY(0)}
+.faq[open] summary .pm{transform:rotate(180deg)}
+.faq .ans{overflow:hidden;font-size:16px;line-height:1.65;color:color-mix(in srgb,var(--navy) 78%,transparent);max-width:70ch;padding:0 0 24px}
+.track{scrollbar-width:none}.track::-webkit-scrollbar{display:none}
+.rbtn{transition:background .18s,color .18s,border-color .18s,transform .18s}
+.rbtn:hover{background:var(--teal);color:#fff;border-color:var(--teal);transform:translateY(-2px)}
+
+@media(max-width:920px){.navbar{flex-wrap:wrap!important;row-gap:10px!important}[style*="repeat(5,1fr)"]{grid-template-columns:repeat(3,1fr)!important}[style*="repeat(4,1fr)"]{grid-template-columns:repeat(2,1fr)!important}[style*="repeat(3,1fr)"]{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:680px){[style*="repeat(5,1fr)"]{grid-template-columns:repeat(2,1fr)!important}[style*="repeat(3,1fr)"]{grid-template-columns:1fr!important}[style*="repeat(2,1fr)"]{grid-template-columns:1fr!important}[style*="1fr 1fr"]{grid-template-columns:1fr!important}[style*="minmax(0,"]{grid-template-columns:1fr!important}[style*="1.6fr 1fr 1.2fr"]{grid-template-columns:1fr!important}[style*="border-right:2px solid var(--color-divider)"]{border-right:none!important}}
+</style>
+</head>
+<body>
+<div style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--gold));width:var(--scrollp,0%);z-index:60;transition:width .1s linear"></div>
+
+<nav class="navbar" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:28px;padding:16px clamp(20px,5vw,64px);border-bottom:2px solid var(--color-divider);background:color-mix(in srgb,var(--color-bg) 80%,#fff);backdrop-filter:blur(8px)">
+  <a href="Home.html" style="display:flex;align-items:center;gap:12px;margin-right:auto;text-decoration:none"><img src="assets/ansta-logo.png" alt="ANSTA" style="height:40px;width:auto"><span style="font-family:var(--font-heading);font-weight:800;font-size:18px;letter-spacing:-.01em;color:var(--navy)">ANSTA</span></a>
+  <span style="display:flex;gap:26px;font-size:14px;font-weight:600;color:var(--navy)" class="navlinks">
+    <a href="Home.html" aria-current="page" style="color:var(--color-accent);text-decoration:none">Home</a>
+    <a href="About.html" style="color:var(--navy);text-decoration:none">About</a>
+    <a href="Courses.html" style="color:var(--navy);text-decoration:none">Courses</a>
+    <a href="Contact.html" style="color:var(--navy);text-decoration:none">Contact</a>
+  </span>
+  <a class="btn btn-primary lift shine" href="Contact.html#apply" style="text-decoration:none">Apply Now</a>
+</nav>
+
+<section class="hero" style="padding-bottom:8px">
+  <div class="hero-aurora" data-parallax data-speed="0.12"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="hero-grid"></div>
+  <div class="ring ring-dash" style="width:clamp(300px,36vw,520px);height:clamp(300px,36vw,520px);top:-70px;right:clamp(-140px,-8vw,-60px)"></div>
+  <div class="ring orbit" style="width:clamp(200px,24vw,360px);height:clamp(200px,24vw,360px);top:40px;right:clamp(-40px,2vw,40px)"></div>
+  <div style="max-width:var(--wrap);margin:0 auto;padding:72px clamp(20px,5vw,64px) 0;position:relative">
+    <span style="display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:22px" data-reveal><span class="hero-badge-dot" style="width:10px;height:10px;background:var(--gold);display:inline-block"></span>Hands-on clinical training · Wilson Garden, Bengaluru</span>
+    <h1 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(42px,6vw,68px);line-height:1.02;letter-spacing:-.025em;margin:0 0 26px;margin-left:-.04em;max-width:15ch;color:var(--navy)" data-reveal>
+      Where nursing theory <span class="grad-text">becomes clinical skill.</span>
+    </h1>
+    <p style="font-size:clamp(16px,1.5vw,18px);line-height:1.62;max-width:60ch;color:color-mix(in srgb,var(--navy) 82%,transparent);margin:0 0 30px" data-reveal>Transform your nursing knowledge into real clinical competence through structured classroom learning, simulation-based skill training, and hands-on hospital internships — guided by experienced clinical trainers.</p>
+    <div class="cta-row" style="margin-bottom:52px" data-reveal>
+      <a class="btn btn-primary btn-xl lift shine" href="Contact.html#apply" style="text-decoration:none">Apply Now</a>
+      <a class="btn btn-secondary btn-xl lift" href="Courses.html" style="text-decoration:none">Explore Courses</a>
+    </div>
+    <hr style="height:2px;border:0;background:var(--color-divider);margin:0 0 30px">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding-bottom:40px" data-reveal>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(34px,4vw,46px);color:var(--color-accent);margin:0;line-height:1"><span data-count="30" data-suffix="+">30+</span></p><p style="font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--navy) 65%,transparent);margin:10px 0 0">Years faculty experience</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(34px,4vw,46px);color:var(--color-accent);margin:0;line-height:1"><span data-count="5">5</span></p><p style="font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--navy) 65%,transparent);margin:10px 0 0">Clinical programs</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(34px,4vw,46px);color:var(--color-accent);margin:0;line-height:1"><span data-count="100" data-suffix="%">100%</span></p><p style="font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--navy) 65%,transparent);margin:10px 0 0">Supervised internship</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(34px,4vw,46px);color:var(--gold);margin:0;line-height:1">Small</p><p style="font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:color-mix(in srgb,var(--navy) 65%,transparent);margin:10px 0 0">Batch sizes</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track" style="padding:16px 0;font-family:var(--font-heading);font-weight:800;font-size:15px;color:#fff;letter-spacing:.02em">
+    <span style="display:flex;gap:28px;padding-right:28px"><span>Ward Nursing</span><span style="color:var(--gold)">◆</span><span>Intensive Care Unit</span><span style="color:var(--gold)">◆</span><span>Operation Theatre</span><span style="color:var(--gold)">◆</span><span>Emergency Department</span><span style="color:var(--gold)">◆</span><span>ANM Clinical Training</span><span style="color:var(--gold)">◆</span><span>Infection Prevention</span><span style="color:var(--gold)">◆</span></span>
+    <span style="display:flex;gap:28px;padding-right:28px" aria-hidden="true"><span>Ward Nursing</span><span style="color:var(--gold)">◆</span><span>Intensive Care Unit</span><span style="color:var(--gold)">◆</span><span>Operation Theatre</span><span style="color:var(--gold)">◆</span><span>Emergency Department</span><span style="color:var(--gold)">◆</span><span>ANM Clinical Training</span><span style="color:var(--gold)">◆</span><span>Infection Prevention</span><span style="color:var(--gold)">◆</span></span>
+  </div>
+</div>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:40px" data-reveal="left">
+    <div>
+      <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px">Why choose ANSTA</span>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0;color:var(--navy);max-width:20ch">Built around what hospitals actually need.</h2>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:var(--color-divider);border:2px solid var(--color-divider)" data-reveal>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Industry-Oriented Curriculum</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Experienced Clinical Trainers</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Modern Skill Laboratory</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Hospital-Based Clinical Internship</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Hands-on Practical Learning</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Individual Skill Assessment</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Soft Skills &amp; Professional Grooming</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Interview Preparation</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Placement Assistance</span></div>
+    <div class="feat" style="background:var(--color-bg);padding:22px 26px;display:flex;align-items:center;gap:14px"><svg class="tick" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M20 6 9 17l-5-5"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy)">Small Batch Training</span></div>
+  </div>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:36px" data-reveal>
+    <div>
+      <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px">Our training areas</span>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0;color:var(--navy)">Five programs. One standard of practice.</h2>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button type="button" class="rbtn" onclick="scrollTrack(-1)" aria-label="Previous" style="width:48px;height:48px;border:2px solid var(--color-divider);background:transparent;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button type="button" class="rbtn" onclick="scrollTrack(1)" aria-label="Next" style="width:48px;height:48px;border:2px solid var(--color-divider);background:transparent;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div>
+  <div class="track" id="course-track" style="display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:14px 0 18px" data-reveal data-nostagger>
+    <a class="cardlink" data-tilt href="Courses.html#ward" style="scroll-snap-align:start;flex:0 0 300px;text-decoration:none;background:var(--color-bg);border:2px solid var(--color-divider);padding:28px;display:flex;flex-direction:column;min-height:280px">
+      <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700">2 Months</span>
+      <h3 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:12px 0 10px;color:var(--navy)">Ward Nursing</h3>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 auto;color:color-mix(in srgb,var(--navy) 72%,transparent)">Patient assessment, vitals, medication administration, infection control and ward procedures.</p>
+      <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--navy);margin-top:20px">View course <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></span>
+    </a>
+    <a class="cardlink" data-tilt href="Courses.html#icu" style="scroll-snap-align:start;flex:0 0 300px;text-decoration:none;background:var(--color-bg);border:2px solid var(--color-divider);padding:28px;display:flex;flex-direction:column;min-height:280px">
+      <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700">3 Months</span>
+      <h3 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:12px 0 10px;color:var(--navy)">Intensive Care (ICU)</h3>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 auto;color:color-mix(in srgb,var(--navy) 72%,transparent)">ICU monitoring, ventilator basics, ABG introduction, critical-care nursing and Code Blue response.</p>
+      <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--navy);margin-top:20px">View course <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></span>
+    </a>
+    <a class="cardlink" data-tilt href="Courses.html#ot" style="scroll-snap-align:start;flex:0 0 300px;text-decoration:none;background:var(--color-bg);border:2px solid var(--color-divider);padding:28px;display:flex;flex-direction:column;min-height:280px">
+      <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700">3 Months</span>
+      <h3 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:12px 0 10px;color:var(--navy)">Operation Theatre (OT)</h3>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 auto;color:color-mix(in srgb,var(--navy) 72%,transparent)">Sterile technique, scrubbing, gowning &amp; gloving, instrument handling and the WHO safety checklist.</p>
+      <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--navy);margin-top:20px">View course <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></span>
+    </a>
+    <a class="cardlink" data-tilt href="Courses.html#er" style="scroll-snap-align:start;flex:0 0 300px;text-decoration:none;background:var(--color-bg);border:2px solid var(--color-divider);padding:28px;display:flex;flex-direction:column;min-height:280px">
+      <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700">2 Months</span>
+      <h3 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:12px 0 10px;color:var(--navy)">Emergency (ER)</h3>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 auto;color:color-mix(in srgb,var(--navy) 72%,transparent)">Triage, primary assessment, BLS, trauma care, ECG basics and shock management.</p>
+      <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--navy);margin-top:20px">View course <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></span>
+    </a>
+    <a class="cardlink" data-tilt href="Courses.html#anm" style="scroll-snap-align:start;flex:0 0 300px;text-decoration:none;background:var(--color-bg);border:2px solid var(--color-divider);padding:28px;display:flex;flex-direction:column;min-height:280px">
+      <span style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);font-weight:700">6 Months · 10th pass</span>
+      <h3 style="font-family:var(--font-heading);font-weight:800;font-size:24px;margin:12px 0 10px;color:var(--navy)">ANM Clinical Training</h3>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 auto;color:color-mix(in srgb,var(--navy) 72%,transparent)">Basic nursing care, hygiene, elderly care, ward procedures and a full clinical internship.</p>
+      <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:var(--navy);margin-top:20px">View course <span class="arrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></span>
+    </a>
+  </div>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--color-divider)" data-reveal="scale">
+    <div style="padding:clamp(32px,5vw,56px)">
+      <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:16px">The hands-on method</span>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.6vw,44px);letter-spacing:-.02em;line-height:1.02;margin:0 0 20px;color:var(--navy)">See one.<br>Do one.<br><span class="own">Own it.</span></h2>
+      <p style="font-size:16px;line-height:1.62;margin:0 0 24px;color:color-mix(in srgb,var(--navy) 80%,transparent);max-width:44ch">Our simulation lab is a safe place to fail before it matters. You practise every skill on real equipment, then perform it under supervision on live hospital floors.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;font-size:14px;color:var(--navy)">
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>Patient Manikins &amp; CPR</span>
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>Patient Monitors</span>
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>Defibrillator</span>
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>Infusion &amp; Syringe Pumps</span>
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>IV &amp; Catheter Models</span>
+        <span style="display:flex;gap:8px;align-items:center"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>OT Instruments</span>
+      </div>
+    </div>
+    <div class="grayscale" style="position:relative;background:var(--color-surface);border-left:2px solid var(--color-divider);min-height:420px;overflow:hidden">
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--color-neutral-600)">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+        <span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">Photo — Simulation lab / ICU room</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--navy);margin-top:84px;position:relative;overflow:hidden">
+  <div class="hero-aurora" style="opacity:.22" data-parallax data-speed="0.06"><span class="blob b1" style="background:radial-gradient(circle at 30% 30%,#1c6f6c,transparent 70%)"></span><span class="blob b2" style="background:radial-gradient(circle at 60% 40%,#8a6a1e,transparent 70%)"></span></div>
+  <div style="max-width:var(--wrap);margin:0 auto;padding:64px clamp(20px,5vw,64px);position:relative">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px 24px" data-reveal>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(38px,4.4vw,54px);color:#fff;margin:0;line-height:1"><span data-count="30" data-suffix="+">30+</span></p><p style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:12px 0 0">Years of faculty experience</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(38px,4.4vw,54px);color:#fff;margin:0;line-height:1"><span data-count="6">6</span></p><p style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:12px 0 0">Clinical departments for internship</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(38px,4.4vw,54px);color:var(--gold);margin:0;line-height:1"><span data-count="3">3</span></p><p style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:12px 0 0">Certificates on completion</p></div>
+      <div><p style="font-family:var(--font-heading);font-weight:800;font-size:clamp(38px,4.4vw,54px);color:#fff;margin:0;line-height:1"><span data-count="10">10</span></p><p style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin:12px 0 0">Clinical training areas covered</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px" data-reveal>How training works</span>
+  <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 40px;color:var(--navy)" data-reveal>From classroom to competency, in four moves.</h2>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:2px solid var(--color-divider)" data-reveal>
+    <div class="step" style="padding:28px 24px 32px;border-right:2px solid var(--color-divider);position:relative"><span style="position:absolute;left:24px;top:-2px;width:44px;height:4px;background:var(--teal)"></span><p style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--gold);margin:20px 0 0;letter-spacing:.06em">01</p><h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;margin:8px 0 8px;color:var(--navy)">Learn</h3><p style="font-size:14px;line-height:1.6;margin:0;color:color-mix(in srgb,var(--navy) 72%,transparent)">Interactive classroom sessions and case-based discussions build the theory.</p></div>
+    <div class="step" style="padding:28px 24px 32px;border-right:2px solid var(--color-divider)"><p style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--gold);margin:20px 0 0;letter-spacing:.06em">02</p><h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;margin:8px 0 8px;color:var(--navy)">Practise</h3><p style="font-size:14px;line-height:1.6;margin:0;color:color-mix(in srgb,var(--navy) 72%,transparent)">Simulation-based skill training and demonstrations on real equipment.</p></div>
+    <div class="step" style="padding:28px 24px 32px;border-right:2px solid var(--color-divider)"><p style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--gold);margin:20px 0 0;letter-spacing:.06em">03</p><h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;margin:8px 0 8px;color:var(--navy)">Perform</h3><p style="font-size:14px;line-height:1.6;margin:0;color:color-mix(in srgb,var(--navy) 72%,transparent)">Supervised clinical practice on live hospital floors across departments.</p></div>
+    <div class="step" style="padding:28px 24px 32px"><p style="font-family:var(--font-heading);font-weight:800;font-size:15px;color:var(--gold);margin:20px 0 0;letter-spacing:.06em">04</p><h3 style="font-family:var(--font-heading);font-weight:800;font-size:20px;margin:8px 0 8px;color:var(--navy)">Get assessed</h3><p style="font-size:14px;line-height:1.6;margin:0;color:color-mix(in srgb,var(--navy) 72%,transparent)">Daily evaluation and a final competency assessment you can show employers.</p></div>
+  </div>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px" data-reveal>Testimonials</span>
+  <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 12px;color:var(--navy)" data-reveal>Feedback from our community.</h2>
+  <p style="font-size:15.5px;line-height:1.6;color:color-mix(in srgb,var(--navy) 75%,transparent);margin:0 0 36px;max-width:56ch" data-reveal>We feature feedback from students, nursing professionals, hospital administrators and faculty members.</p>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--color-divider);border:2px solid var(--color-divider)" data-reveal>
+    <div class="step" style="background:var(--color-bg);padding:30px 26px;min-height:170px;display:flex;flex-direction:column"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><path d="M9.5 5C6.5 5 4 7.5 4 10.5V19h8v-8H7.5c0-1.7 1.3-3 3-3V5zm10 0C16.5 5 14 7.5 14 10.5V19h8v-8h-4.5c0-1.7 1.3-3 3-3V5z"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy);margin:auto 0 6px">Students</span><span style="font-size:12.5px;color:color-mix(in srgb,var(--navy) 55%,transparent)">Testimonial coming soon</span></div>
+    <div class="step" style="background:var(--color-bg);padding:30px 26px;min-height:170px;display:flex;flex-direction:column"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><path d="M9.5 5C6.5 5 4 7.5 4 10.5V19h8v-8H7.5c0-1.7 1.3-3 3-3V5zm10 0C16.5 5 14 7.5 14 10.5V19h8v-8h-4.5c0-1.7 1.3-3 3-3V5z"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy);margin:auto 0 6px">Nursing Professionals</span><span style="font-size:12.5px;color:color-mix(in srgb,var(--navy) 55%,transparent)">Testimonial coming soon</span></div>
+    <div class="step" style="background:var(--color-bg);padding:30px 26px;min-height:170px;display:flex;flex-direction:column"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><path d="M9.5 5C6.5 5 4 7.5 4 10.5V19h8v-8H7.5c0-1.7 1.3-3 3-3V5zm10 0C16.5 5 14 7.5 14 10.5V19h8v-8h-4.5c0-1.7 1.3-3 3-3V5z"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy);margin:auto 0 6px">Hospital Administrators</span><span style="font-size:12.5px;color:color-mix(in srgb,var(--navy) 55%,transparent)">Testimonial coming soon</span></div>
+    <div class="step" style="background:var(--color-bg);padding:30px 26px;min-height:170px;display:flex;flex-direction:column"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><path d="M9.5 5C6.5 5 4 7.5 4 10.5V19h8v-8H7.5c0-1.7 1.3-3 3-3V5zm10 0C16.5 5 14 7.5 14 10.5V19h8v-8h-4.5c0-1.7 1.3-3 3-3V5z"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy);margin:auto 0 6px">Faculty Members</span><span style="font-size:12.5px;color:color-mix(in srgb,var(--navy) 55%,transparent)">Testimonial coming soon</span></div>
+  </div>
+  <p style="font-size:12px;color:color-mix(in srgb,var(--navy) 55%,transparent);margin:16px 0 0" data-reveal>Placeholder — send us real trainee and employer feedback to feature here.</p>
+</section>
+
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <div style="display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.4fr);gap:clamp(24px,5vw,64px)">
+    <div data-reveal="left">
+      <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px">FAQ</span>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(28px,3.2vw,38px);letter-spacing:-.02em;margin:0 0 16px;color:var(--navy)">Questions, answered.</h2>
+      <p style="font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--navy) 72%,transparent);margin:0">Still unsure? <a href="Contact.html" style="font-weight:700">Talk to our team →</a></p>
+    </div>
+    <div data-reveal="right">
+      <details class="faq" open><summary>Who can join ANSTA?<span class="pm"></span></summary><div class="ans">GNM, B.Sc. Nursing and Post Basic B.Sc. Nursing graduates, experienced nurses seeking upskilling, and eligible candidates for ANM training (10th pass).</div></details>
+      <details class="faq"><summary>Is clinical training included?<span class="pm"></span></summary><div class="ans">Yes. All eligible programs include a supervised clinical internship across real hospital departments.</div></details>
+      <details class="faq"><summary>Do you provide placement assistance?<span class="pm"></span></summary><div class="ans">Yes. We support students with career guidance, interview preparation, soft-skills training and hospital placement assistance (subject to vacancies and employer requirements).</div></details>
+      <details class="faq" style="border-bottom:2px solid var(--color-divider)"><summary>Do I receive a certificate?<span class="pm"></span></summary><div class="ans">Yes. On successful completion you receive an ANSTA Course Completion Certificate, a Clinical Internship Certificate and a Skill Competency Assessment Report.</div></details>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--teal);margin-top:84px;color:#fff;position:relative;overflow:hidden">
+  <div class="hero-aurora" style="opacity:.3" data-parallax data-speed="0.05"><span class="blob b2" style="background:radial-gradient(circle at 60% 40%,#3aa5a2,transparent 70%)"></span><span class="blob b3" style="background:radial-gradient(circle at 50% 50%,#0d6a68,transparent 70%)"></span></div>
+  <div class="ring ring-dash" style="border-color:rgba(255,255,255,.28);width:clamp(280px,32vw,480px);height:clamp(280px,32vw,480px);top:-90px;right:clamp(-120px,-6vw,-40px);z-index:0"></div>
+  <div class="ring orbit floaty" style="border:2px solid rgba(255,255,255,.18);width:clamp(180px,20vw,300px);height:clamp(180px,20vw,300px);bottom:-70px;right:clamp(40px,8vw,120px);z-index:0"></div>
+  <div style="max-width:var(--wrap);margin:0 auto;padding:clamp(48px,7vw,88px) clamp(20px,5vw,64px);position:relative;z-index:1">
+    <span style="display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);font-weight:600;margin-bottom:22px" data-reveal>Learn · Practice · Excel · Serve</span>
+    <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(34px,5vw,60px);line-height:.98;letter-spacing:-.03em;margin:0 0 28px;margin-left:-.03em;color:#fff;max-width:16ch" data-reveal>Ready to train with your hands?</h2>
+    <div class="cta-row" data-reveal>
+      <a class="btn btn-xl lift shine" href="Contact.html#apply" style="background:#fff;color:var(--teal);text-decoration:none">Apply Now</a>
+      <a class="btn btn-ghost btn-xl lift" href="Contact.html#apply" style="color:#fff;border:2px solid rgba(255,255,255,.7);text-decoration:none">Book a Campus Visit</a>
+    </div>
+  </div>
+</section>
+
+<footer style="background:var(--navy);color:#fff">
+  <div style="max-width:var(--wrap);margin:0 auto;padding:64px clamp(20px,5vw,64px) 40px;display:grid;grid-template-columns:1.6fr 1fr 1.2fr;gap:40px">
+    <div>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><img src="assets/ansta-logo.png" alt="ANSTA" style="height:44px;width:auto;background:#fff;padding:4px"><span style="font-family:var(--font-heading);font-weight:800;font-size:20px">ANSTA</span></div>
+      <p style="font-size:14px;line-height:1.6;color:rgba(255,255,255,.7);max-width:38ch;margin:0">Advanced Nursing Skill Training Academy — bridging the gap between nursing education and professional practice.</p>
+    </div>
+    <div>
+      <h4 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 16px">Explore</h4>
+      <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+        <a href="Home.html" style="color:#fff;text-decoration:none">Home</a>
+        <a href="About.html" style="color:#fff;text-decoration:none">About &amp; Founder</a>
+        <a href="Courses.html" style="color:#fff;text-decoration:none">Courses</a>
+        <a href="Contact.html" style="color:#fff;text-decoration:none">Contact &amp; Apply</a>
+      </div>
+    </div>
+    <div>
+      <h4 style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:0 0 16px">Reach us</h4>
+      <div style="display:flex;flex-direction:column;gap:8px;font-size:14px;color:rgba(255,255,255,.85)">
+        <span>Wilson Garden, Bengaluru, Karnataka</span>
+        <a href="tel:+919945694326" style="color:#fff;text-decoration:none">+91 99456 94326</a>
+        <a href="mailto:anstrainingacademy@gmail.com" style="color:#fff;text-decoration:none">anstrainingacademy@gmail.com</a>
+        <span style="color:rgba(255,255,255,.6);margin-top:6px">Mon–Sat: 9:00 AM – 6:00 PM</span>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,.15)"><div style="max-width:var(--wrap);margin:0 auto;padding:20px clamp(20px,5vw,64px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:rgba(255,255,255,.55)"><span>© 2026 ANSTA. All Rights Reserved.</span><span>Learn · Practice · Excel · Serve</span></div></div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
