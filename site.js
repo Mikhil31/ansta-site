@@ -135,12 +135,104 @@
     }
   }
 
+  /* ---- facilities slideshow: autoplay + swipe + thumbnails + keyboard ---- */
+  function initGallery() {
+    var gal = document.querySelector('.gal');
+    if (!gal) return;
+    var slides = Array.prototype.slice.call(gal.querySelectorAll('.gal-slide'));
+    var thumbs = Array.prototype.slice.call(gal.querySelectorAll('.gal-thumb'));
+    var bar = gal.querySelector('.gal-progress i');
+    var prevBtn = document.querySelector('.gal-prev');
+    var nextBtn = document.querySelector('.gal-next');
+    var n = slides.length;
+    if (!n) return;
+
+    var DWELL = 5500;
+    var cur = 0, timer = null, paused = false, startAt = 0, remaining = DWELL;
+    gal.style.setProperty('--gal-dwell', DWELL + 'ms');
+
+    function replayProgress() {
+      if (reduce || !bar) return;
+      bar.style.animation = 'none';
+      void bar.offsetWidth;          // force reflow so the animation restarts
+      bar.style.animation = '';
+    }
+    function clearTimer() { if (timer) { clearTimeout(timer); timer = null; } }
+    function arm(ms) {
+      clearTimer();
+      if (reduce || paused) return;
+      startAt = Date.now();
+      remaining = ms;
+      timer = setTimeout(function () { go(cur + 1); }, ms);
+    }
+    function go(i) {
+      i = ((i % n) + n) % n;
+      slides[cur].removeAttribute('data-active');
+      thumbs[cur].removeAttribute('data-active');
+      cur = i;
+      slides[cur].setAttribute('data-active', '');
+      thumbs[cur].setAttribute('data-active', '');
+      replayProgress();
+      arm(DWELL);
+    }
+    function pause() {
+      if (paused) return;
+      paused = true;
+      remaining = Math.max(400, DWELL - (Date.now() - startAt));
+      clearTimer();
+      gal.classList.add('is-paused');
+    }
+    function resume() {
+      if (!paused) return;
+      paused = false;
+      gal.classList.remove('is-paused');
+      arm(remaining);              // finishes the leftover of the current slide
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', function () { go(cur - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function () { go(cur + 1); });
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { go(i); }); });
+
+    gal.addEventListener('keydown', function (ev) {
+      if (ev.key === 'ArrowLeft') { ev.preventDefault(); go(cur - 1); }
+      else if (ev.key === 'ArrowRight') { ev.preventDefault(); go(cur + 1); }
+    });
+
+    // pause while hovering / focused, resume on leave
+    gal.addEventListener('mouseenter', pause);
+    gal.addEventListener('mouseleave', resume);
+    gal.addEventListener('focusin', pause);
+    gal.addEventListener('focusout', resume);
+
+    // swipe / drag on the stage (pointer events, mouse + touch)
+    var stage = gal.querySelector('.gal-stage');
+    var downX = null;
+    if (stage) {
+      stage.addEventListener('pointerdown', function (ev) { downX = ev.clientX; pause(); });
+      window.addEventListener('pointerup', function (ev) {
+        if (downX === null) return;
+        var dx = ev.clientX - downX;
+        downX = null;
+        if (Math.abs(dx) > 42) go(cur + (dx < 0 ? 1 : -1));
+        else resume();
+      });
+    }
+
+    // don't let autoplay race ahead while the tab is hidden
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) pause(); else resume();
+    });
+
+    if (!reduce) { gal.classList.add('is-playing'); replayProgress(); arm(DWELL); }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initReveal();
     initNav();
     initCounters();
     initTilt();
     initParallax();
+    initGallery();
     openCourseFromHash();
   });
   window.addEventListener('hashchange', openCourseFromHash);

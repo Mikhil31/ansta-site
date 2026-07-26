@@ -123,6 +123,45 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
 /* stack the method card early so the photo never becomes a tall sliver */
 @media(max-width:900px){.method-card{grid-template-columns:1fr!important}.method-card .photo-frame{min-height:0!important;aspect-ratio:16/10;border-left:none!important;border-top:2px solid var(--color-divider)}}
 
+/* ===== facilities slideshow ===== */
+.gal{position:relative;outline:none}
+.gal:focus-visible .gal-stage{box-shadow:0 0 0 3px color-mix(in srgb,var(--teal) 55%,transparent)}
+.gal-stage{position:relative;overflow:hidden;border:2px solid var(--color-divider);background:var(--navy);aspect-ratio:16/9;cursor:grab}
+.gal-stage:active{cursor:grabbing}
+@media(max-width:600px){.gal-stage{aspect-ratio:3/4}}
+.gal-slide{position:absolute;inset:0;margin:0;opacity:0;visibility:hidden;transition:opacity 1s cubic-bezier(.4,0,.2,1),visibility 1s;z-index:0}
+.gal-slide[data-active]{opacity:1;visibility:visible;z-index:1}
+.gal-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1)}
+.gal-slide[data-active] img{animation:galkb 6.6s ease-out both}
+@keyframes galkb{from{transform:scale(1.09)}to{transform:scale(1)}}
+.gal-slide::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--navy) 4%,transparent) 28%,color-mix(in srgb,var(--navy) 78%,transparent))}
+.gal-cap{position:absolute;left:0;bottom:0;z-index:2;display:flex;align-items:flex-end;gap:clamp(12px,1.6vw,18px);padding:clamp(20px,3.6vw,42px)}
+.gal-num{font-family:var(--font-heading);font-weight:800;font-size:clamp(26px,4vw,46px);color:rgba(255,255,255,.5);line-height:.82}
+.gal-bar{width:2px;align-self:stretch;background:var(--gold);flex:none}
+.gal-txt{display:flex;flex-direction:column;gap:6px;color:#fff}
+.gal-txt b{font-family:var(--font-heading);font-weight:800;font-size:clamp(20px,2.7vw,31px);letter-spacing:-.015em;line-height:1.04}
+.gal-txt em{font-style:normal;font-size:clamp(13px,1.35vw,15.5px);color:rgba(255,255,255,.84);max-width:48ch;line-height:1.5}
+/* caption reveal, staggered, when its slide is active */
+.gal-cap>*{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.gal-slide[data-active] .gal-num{opacity:1;transform:none;transition-delay:.18s}
+.gal-slide[data-active] .gal-bar{opacity:1;transform:none;transition-delay:.26s}
+.gal-slide[data-active] .gal-txt{opacity:1;transform:none;transition-delay:.34s}
+/* autoplay progress bar */
+.gal-progress{position:absolute;top:0;left:0;right:0;height:4px;z-index:3;background:rgba(255,255,255,.18)}
+.gal-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--gold))}
+.gal.is-playing .gal-progress i{animation:galprog var(--gal-dwell,5500ms) linear forwards}
+.gal.is-paused .gal-progress i{animation-play-state:paused}
+@keyframes galprog{from{width:0}to{width:100%}}
+/* thumbnail rail */
+.gal-thumbs{display:flex;gap:10px;margin-top:12px}
+.gal-thumb{flex:1 1 0;height:clamp(50px,7vw,76px);padding:0;border:2px solid var(--color-divider);background:var(--navy);cursor:pointer;overflow:hidden;position:relative;opacity:.48;filter:saturate(.85);transition:opacity .3s,border-color .3s,transform .3s,filter .3s}
+.gal-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-thumb:hover{opacity:.9;transform:translateY(-2px)}
+.gal-thumb[data-active]{opacity:1;filter:none;border-color:var(--gold);transform:translateY(-3px)}
+.gal-thumb[data-active]::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2px var(--gold);pointer-events:none}
+@media(max-width:600px){.gal-thumbs{gap:6px}}
+@media(prefers-reduced-motion:reduce){.gal-slide{transition:opacity .3s linear}.gal-slide[data-active] img{animation:none}.gal.is-playing .gal-progress i{animation:none;width:0}.gal-cap>*{transition:none;opacity:1;transform:none}}
+
 .faq{border-top:2px solid var(--color-divider)}
 .faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:24px 0;font-family:"Archivo";font-weight:800;font-size:20px;color:var(--navy);letter-spacing:-.01em;transition:color .2s}
 .faq summary:hover{color:var(--teal)}
@@ -299,6 +338,13 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
   </div>
 </section>
 
+<!-- ============================================================================
+     TESTIMONIALS — TEMPORARILY DISABLED (TODO: re-enable once we have real
+     trainee / nursing-professional / employer / faculty feedback to feature).
+     Full markup preserved below so it can be switched back on with no rework.
+     Replaced for now by the Facilities slideshow that follows this comment.
+     ============================================================================ -->
+<!--
 <section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
   <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px" data-reveal>Testimonials</span>
   <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0 0 12px;color:var(--navy)" data-reveal>Feedback from our community.</h2>
@@ -310,6 +356,54 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
     <div class="step" style="background:var(--color-bg);padding:30px 26px;min-height:170px;display:flex;flex-direction:column"><svg width="26" height="26" viewBox="0 0 24 24" fill="var(--gold)" stroke="none"><path d="M9.5 5C6.5 5 4 7.5 4 10.5V19h8v-8H7.5c0-1.7 1.3-3 3-3V5zm10 0C16.5 5 14 7.5 14 10.5V19h8v-8h-4.5c0-1.7 1.3-3 3-3V5z"/></svg><span style="font-family:var(--font-heading);font-weight:800;font-size:17px;color:var(--navy);margin:auto 0 6px">Faculty Members</span><span style="font-size:12.5px;color:color-mix(in srgb,var(--navy) 55%,transparent)">Testimonial coming soon</span></div>
   </div>
   <p style="font-size:12px;color:color-mix(in srgb,var(--navy) 55%,transparent);margin:16px 0 0" data-reveal>Placeholder — send us real trainee and employer feedback to feature here.</p>
+</section>
+-->
+
+<!-- ===== FACILITIES SLIDESHOW (cinematic, auto-playing, swipe + thumbnails) ===== -->
+<section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:34px" data-reveal>
+    <div>
+      <span style="display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-700);font-weight:600;margin-bottom:14px">Inside ANSTA</span>
+      <h2 style="font-family:var(--font-heading);font-weight:800;font-size:clamp(30px,3.4vw,40px);letter-spacing:-.02em;margin:0;color:var(--navy)">Step inside the academy.</h2>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button type="button" class="rbtn gal-prev" aria-label="Previous facility" style="width:48px;height:48px;border:2px solid var(--color-divider);background:transparent;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button type="button" class="rbtn gal-next" aria-label="Next facility" style="width:48px;height:48px;border:2px solid var(--color-divider);background:transparent;color:var(--navy);cursor:pointer;display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>
+  </div>
+
+  <div class="gal" data-reveal="scale" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Academy facilities">
+    <div class="gal-stage">
+      <span class="gal-progress"><i></i></span>
+      <figure class="gal-slide" data-active>
+        <img src="assets/training-center.jpeg" alt="ANSTA academy building exterior at Wilson Garden with the Advanced Nursing Skill Training Academy signboard" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">01</span><span class="gal-bar"></span><span class="gal-txt"><b>The Academy</b><em>Our campus at Wilson Garden, Bengaluru — where nursing careers begin.</em></span></figcaption>
+      </figure>
+      <figure class="gal-slide">
+        <img src="assets/classroom-1.jpeg" alt="ANSTA skills classroom with projector screen showing the academy logo and student desks" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">02</span><span class="gal-bar"></span><span class="gal-txt"><b>Skills Classroom</b><em>Projector-led sessions that bridge nursing theory and professional practice.</em></span></figcaption>
+      </figure>
+      <figure class="gal-slide">
+        <img src="assets/classroom-2.jpeg" alt="ANSTA classroom with anatomy, respiratory and hand-washing procedure charts on the walls" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">03</span><span class="gal-bar"></span><span class="gal-txt"><b>Anatomy Classroom</b><em>Anatomy and procedure charts that make hands-on learning stick.</em></span></figcaption>
+      </figure>
+      <figure class="gal-slide">
+        <img src="assets/icu-room.jpeg" alt="ANSTA ICU training room with hospital bed, patient monitor, ventilator and oxygen wall panel" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">04</span><span class="gal-bar"></span><span class="gal-txt"><b>ICU Training Room</b><em>Monitored beds, ventilator and oxygen panel for real critical-care practice.</em></span></figcaption>
+      </figure>
+      <figure class="gal-slide">
+        <img src="assets/ot-room.jpeg" alt="ANSTA operation theatre training setup with OT lights, anaesthesia workstation and instrument trolleys" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">05</span><span class="gal-bar"></span><span class="gal-txt"><b>Operation Theatre</b><em>Sterile OT setup with anaesthesia workstation and full instrument trolleys.</em></span></figcaption>
+      </figure>
+    </div>
+    <div class="gal-thumbs">
+      <button type="button" class="gal-thumb" data-active aria-label="Show The Academy"><img src="assets/training-center.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb" aria-label="Show Skills Classroom"><img src="assets/classroom-1.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb" aria-label="Show Anatomy Classroom"><img src="assets/classroom-2.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb" aria-label="Show ICU Training Room"><img src="assets/icu-room.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb" aria-label="Show Operation Theatre"><img src="assets/ot-room.jpeg" alt="" loading="lazy"></button>
+    </div>
+  </div>
 </section>
 
 <section style="max-width:var(--wrap);margin:0 auto;padding:84px clamp(20px,5vw,64px) 0">
