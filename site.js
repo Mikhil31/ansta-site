@@ -247,7 +247,7 @@ function scrollTrack(dir) {
 /* WhatsApp enquiry (Contact) — builds a pre-filled chat from the form fields
    and opens it. wa.me can only pre-fill; the visitor taps send in WhatsApp. */
 function sendWhatsApp() {
-  var NUMBER = '919945694326'; // +91 99456 94326
+  var NUMBER = '919740888397'; // +91 97408 88397
   function val(id) { var el = document.getElementById(id); return el ? el.value.trim() : ''; }
   var name = val('cf-name'), phone = val('cf-phone'), email = val('cf-email'), course = val('cf-course'), msg = val('cf-msg');
   var statusEl = document.getElementById('form-status');
