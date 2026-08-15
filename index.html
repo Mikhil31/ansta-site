@@ -153,6 +153,48 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
 .gal.is-paused .gal-progress i{animation-play-state:paused}
 @keyframes galprog{from{width:0}to{width:100%}}
 /* thumbnail rail */
+/* video slide: sits inside the same stage, reuses the same caption + progress chrome */
+.gal-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:var(--navy);display:block;cursor:pointer}
+/* the 5.5s dwell bar would lie about timing on the video slide, so hide it there */
+.gal:has(.gal-slide--video[data-active]) .gal-progress{opacity:0}
+.gal-slide--video.is-video-playing .gal-video{object-fit:contain}
+/* pointer-events matters as much as opacity here: a faded caption still eats clicks
+   on the native seek bar, which sits at the bottom of the stage under .gal-cap */
+.gal-slide--video.is-video-playing::after,.gal-slide--video.is-video-playing .gal-cap{opacity:0;pointer-events:none;transition:opacity .4s ease}
+.gal-slide--video.is-video-playing .gal-video{cursor:default}
+.gal-sound{position:absolute;right:clamp(14px,2.2vw,24px);top:clamp(14px,2.2vw,24px);z-index:4;display:flex;align-items:center;gap:9px;padding:10px 16px;border:2px solid rgba(255,255,255,.45);background:color-mix(in srgb,var(--navy) 58%,transparent);backdrop-filter:blur(6px);color:#fff;cursor:pointer;font-family:var(--font-heading);font-weight:700;font-size:13px;letter-spacing:-.005em;line-height:1;transition:background .3s,border-color .3s,transform .3s}
+.gal-sound .ico{width:18px;height:18px;flex:none}
+.gal-sound .ico-on{display:none}
+.gal-sound[aria-pressed="true"] .ico-on{display:block}
+.gal-sound[aria-pressed="true"] .ico-off{display:none}
+.gal-sound:hover{background:var(--teal);border-color:var(--gold);transform:translateY(-2px)}
+.gal-sound:focus-visible{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 55%,transparent)}
+/* custom player bar — replaces the native controls so the seek bar is ours to style
+   and can never end up underneath the caption or the gradient overlay */
+.vp{position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;gap:clamp(8px,1.2vw,14px);padding:clamp(10px,1.4vw,16px) clamp(12px,2vw,22px);background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--navy) 92%,transparent) 55%);opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease,visibility .3s}
+.gal-slide--video.is-video-playing .vp{opacity:1;visibility:visible;transform:none}
+.vp-btn{width:36px;height:36px;flex:none;display:flex;align-items:center;justify-content:center;padding:0;border:none;background:transparent;color:#fff;cursor:pointer;transition:color .2s,transform .2s}
+.vp-btn svg{width:22px;height:22px}
+.vp-btn:hover{color:var(--gold);transform:scale(1.08)}
+.vp-btn:focus-visible{outline:none;color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 70%,transparent)}
+.vp-play .ico-play{display:none}
+.gal-slide--video.is-paused-video .vp-play .ico-play{display:block}
+.gal-slide--video.is-paused-video .vp-play .ico-pause{display:none}
+.vp-time{font-family:var(--font-heading);font-weight:700;font-size:12px;color:rgba(255,255,255,.8);font-variant-numeric:tabular-nums;flex:none}
+.vp-seek{flex:1 1 auto;min-width:60px;height:20px;margin:0;padding:0;background:transparent;cursor:pointer;-webkit-appearance:none;appearance:none}
+.vp-seek::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--gold) 0 var(--vp-pct,0%),rgba(255,255,255,.3) var(--vp-pct,0%) 100%)}
+.vp-seek::-moz-range-track{height:4px;border-radius:2px;background:rgba(255,255,255,.3)}
+.vp-seek::-moz-range-progress{height:4px;border-radius:2px;background:var(--gold)}
+.vp-seek::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:13px;height:13px;margin-top:-4.5px;border-radius:50%;background:#fff;border:2px solid var(--gold);cursor:pointer}
+.vp-seek::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:2px solid var(--gold);cursor:pointer}
+.vp-seek:focus-visible{outline:none}
+.vp-seek:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 55%,transparent)}
+@media(max-width:600px){.vp-time{display:none}.vp-full{display:none}}
+@media(prefers-reduced-motion:reduce){.vp,.vp-btn{transition:none}.vp-btn:hover{transform:none}}
+.gal-thumb-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;background:color-mix(in srgb,var(--navy) 34%,transparent);pointer-events:none}
+.gal-thumb-play svg{width:20px;height:20px}
+@media(max-width:600px){.gal-sound span{display:none}.gal-sound{padding:10px}}
+@media(prefers-reduced-motion:reduce){.gal-sound{transition:none}.gal-sound:hover{transform:none}}
 .gal-thumbs{display:flex;gap:10px;margin-top:12px}
 .gal-thumb{flex:1 1 0;height:clamp(50px,7vw,76px);padding:0;border:2px solid var(--color-divider);background:var(--navy);cursor:pointer;overflow:hidden;position:relative;opacity:.48;filter:saturate(.85);transition:opacity .3s,border-color .3s,transform .3s,filter .3s}
 .gal-thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -309,8 +351,8 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
       </div>
     </div>
     <div class="photo-frame" style="position:relative;background:var(--color-surface);border-left:2px solid var(--color-divider);min-height:420px;overflow:hidden">
-      <img src="assets/icu-room.jpeg" alt="ANSTA intensive-care training room — hospital bed, patient monitor, ventilator and oxygen wall panel" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-      <span class="photo-tag" style="position:absolute;left:18px;bottom:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:color-mix(in srgb,var(--navy) 82%,transparent);color:#fff;font-family:var(--font-heading);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(4px)"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>ICU Training Room</span>
+      <img src="assets/nursing-station.jpeg" alt="ANSTA patient care simulation ward — manikin on a hospital bed with bed head panel, ventilator and CPAP charts and the nursing station desk" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+      <span class="photo-tag" style="position:absolute;left:18px;bottom:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:color-mix(in srgb,var(--navy) 82%,transparent);color:#fff;font-family:var(--font-heading);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(4px)"><span style="width:7px;height:7px;background:var(--gold);flex:none"></span>Patient Care Ward</span>
     </div>
   </div>
 </section>
@@ -375,33 +417,48 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
   <div class="gal" data-reveal="scale" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Academy facilities">
     <div class="gal-stage">
       <span class="gal-progress"><i></i></span>
-      <figure class="gal-slide" data-active>
-        <img src="assets/training-center.jpeg" alt="ANSTA academy building exterior at Wilson Garden with the Advanced Nursing Skill Training Academy signboard" loading="lazy">
-        <figcaption class="gal-cap"><span class="gal-num">01</span><span class="gal-bar"></span><span class="gal-txt"><b>The Academy</b><em>Our campus at Wilson Garden, Bengaluru — where nursing careers begin.</em></span></figcaption>
+      <figure class="gal-slide gal-slide--video" data-active data-video>
+        <video class="gal-video" poster="assets/academy-tour-poster.jpg" preload="metadata" muted playsinline>
+          <source src="assets/academy-tour.mp4" type="video/mp4">
+          Your browser doesn't support video. <a href="assets/academy-tour.mp4">Download the academy tour</a> instead.
+        </video>
+        <button type="button" class="gal-sound" aria-pressed="false" aria-label="Turn on sound for the academy tour">
+          <svg class="ico ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m23 9-6 6"/><path d="m17 9 6 6"/></svg>
+          <svg class="ico ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+          <span>Tap for sound</span>
+        </button>
+        <div class="vp" role="group" aria-label="Academy tour player controls">
+          <button type="button" class="vp-btn vp-play" aria-label="Pause">
+            <svg class="ico-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            <svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+          </button>
+          <span class="vp-time vp-cur">0:00</span>
+          <input class="vp-seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Seek through the academy tour">
+          <span class="vp-time vp-dur">0:44</span>
+          <button type="button" class="vp-btn vp-full" aria-label="Full screen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+          </button>
+        </div>
+        <figcaption class="gal-cap"><span class="gal-num">01</span><span class="gal-bar"></span><span class="gal-txt"><b>The Academy</b><em>A walk through our Wilson Garden campus — classrooms, labs and the operation theatre.</em></span></figcaption>
       </figure>
       <figure class="gal-slide">
-        <img src="assets/classroom-1.jpeg" alt="ANSTA skills classroom with projector screen showing the academy logo and student desks" loading="lazy">
-        <figcaption class="gal-cap"><span class="gal-num">02</span><span class="gal-bar"></span><span class="gal-txt"><b>Skills Classroom</b><em>Projector-led sessions that bridge nursing theory and professional practice.</em></span></figcaption>
+        <img src="assets/training-center.jpeg" alt="ANSTA academy building exterior at Wilson Garden with the Advanced Nursing Skill Training Academy signboard" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">02</span><span class="gal-bar"></span><span class="gal-txt"><b>The Building</b><em>Our campus at Wilson Garden, Bengaluru — where nursing careers begin.</em></span></figcaption>
       </figure>
       <figure class="gal-slide">
         <img src="assets/classroom-2.jpeg" alt="ANSTA classroom with anatomy, respiratory and hand-washing procedure charts on the walls" loading="lazy">
         <figcaption class="gal-cap"><span class="gal-num">03</span><span class="gal-bar"></span><span class="gal-txt"><b>Anatomy Classroom</b><em>Anatomy and procedure charts that make hands-on learning stick.</em></span></figcaption>
       </figure>
       <figure class="gal-slide">
-        <img src="assets/icu-room.jpeg" alt="ANSTA ICU training room with hospital bed, patient monitor, ventilator and oxygen wall panel" loading="lazy">
-        <figcaption class="gal-cap"><span class="gal-num">04</span><span class="gal-bar"></span><span class="gal-txt"><b>ICU Training Room</b><em>Monitored beds, ventilator and oxygen panel for real critical-care practice.</em></span></figcaption>
-      </figure>
-      <figure class="gal-slide">
-        <img src="assets/ot-room.jpeg" alt="ANSTA operation theatre training setup with OT lights, anaesthesia workstation and instrument trolleys" loading="lazy">
-        <figcaption class="gal-cap"><span class="gal-num">05</span><span class="gal-bar"></span><span class="gal-txt"><b>Operation Theatre</b><em>Sterile OT setup with anaesthesia workstation and full instrument trolleys.</em></span></figcaption>
+        <img src="assets/nursing-station.jpeg" alt="ANSTA patient care simulation ward with manikin on a hospital bed, bed head panel, ventilator and CPAP charts and the nursing station desk" loading="lazy">
+        <figcaption class="gal-cap"><span class="gal-num">04</span><span class="gal-bar"></span><span class="gal-txt"><b>Patient Care Ward</b><em>Manikin-based bedside practice with bed head panel, ventilator and CPAP setup.</em></span></figcaption>
       </figure>
     </div>
     <div class="gal-thumbs">
-      <button type="button" class="gal-thumb" data-active aria-label="Show The Academy"><img src="assets/training-center.jpeg" alt="" loading="lazy"></button>
-      <button type="button" class="gal-thumb" aria-label="Show Skills Classroom"><img src="assets/classroom-1.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb gal-thumb--video" data-active aria-label="Show the academy tour video"><img src="assets/academy-tour-poster.jpg" alt="" loading="lazy"><span class="gal-thumb-play"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span></button>
+      <button type="button" class="gal-thumb" aria-label="Show The Building"><img src="assets/training-center.jpeg" alt="" loading="lazy"></button>
       <button type="button" class="gal-thumb" aria-label="Show Anatomy Classroom"><img src="assets/classroom-2.jpeg" alt="" loading="lazy"></button>
-      <button type="button" class="gal-thumb" aria-label="Show ICU Training Room"><img src="assets/icu-room.jpeg" alt="" loading="lazy"></button>
-      <button type="button" class="gal-thumb" aria-label="Show Operation Theatre"><img src="assets/ot-room.jpeg" alt="" loading="lazy"></button>
+      <button type="button" class="gal-thumb" aria-label="Show Patient Care Ward"><img src="assets/nursing-station.jpeg" alt="" loading="lazy"></button>
     </div>
   </div>
 </section>
@@ -464,6 +521,6 @@ a.btn-secondary,a.btn-secondary:hover,a.btn-secondary:focus{color:var(--color-te
   <div style="border-top:1px solid rgba(255,255,255,.15)"><div style="max-width:var(--wrap);margin:0 auto;padding:20px clamp(20px,5vw,64px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12.5px;color:rgba(255,255,255,.55)"><span>© 2026 ANSTA. All Rights Reserved.</span><span>Learn · Practice · Excel · Serve</span></div></div>
 </footer>
 
-<script src="site.js"></script>
+<script src="site.js?v=3"></script>
 </body>
 </html>

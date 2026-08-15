@@ -151,6 +151,18 @@
     var cur = 0, timer = null, paused = false, startAt = 0, remaining = DWELL;
     gal.style.setProperty('--gal-dwell', DWELL + 'ms');
 
+    // the first slide holds the walkthrough video; while it plays the carousel holds still
+    var vSlide = gal.querySelector('[data-video]');
+    var video = vSlide && vSlide.querySelector('.gal-video');
+    var soundBtn = vSlide && vSlide.querySelector('.gal-sound');
+    var vp = vSlide && vSlide.querySelector('.vp');
+    var vpPlay = vp && vp.querySelector('.vp-play');
+    var vpSeek = vp && vp.querySelector('.vp-seek');
+    var vpCur = vp && vp.querySelector('.vp-cur');
+    var vpDur = vp && vp.querySelector('.vp-dur');
+    var vpFull = vp && vp.querySelector('.vp-full');
+    var videoLock = false, inView = false, scrubbing = false;
+
     function replayProgress() {
       if (reduce || !bar) return;
       bar.style.animation = 'none';
@@ -160,20 +172,44 @@
     function clearTimer() { if (timer) { clearTimeout(timer); timer = null; } }
     function arm(ms) {
       clearTimer();
-      if (reduce || paused) return;
+      if (reduce || paused || videoLock) return;   // videoLock: nothing re-arms under a playing video
       startAt = Date.now();
       remaining = ms;
       timer = setTimeout(function () { go(cur + 1); }, ms);
     }
+    function stopVideo() {
+      if (!video) return;
+      videoLock = false;
+      scrubbing = false;
+      video.pause();
+      video.currentTime = 0;
+      video.muted = true;                 // next visit starts silent again
+      vSlide.classList.remove('is-video-playing');
+      vSlide.classList.remove('is-paused-video');
+      if (soundBtn) {
+        soundBtn.setAttribute('aria-pressed', 'false');
+        soundBtn.setAttribute('aria-label', 'Turn on sound for the academy tour');
+        var l = soundBtn.querySelector('span'); if (l) l.textContent = 'Tap for sound';
+      }
+    }
+    // muted playback is always permitted, so this never gets refused the way unmuted play() can be
+    function playMuted() {
+      if (!video || !inView || slides[cur] !== vSlide || !video.paused) return;
+      var p = video.play();
+      if (p && p.catch) p.catch(function () { videoLock = false; arm(DWELL); });
+    }
     function go(i) {
       i = ((i % n) + n) % n;
+      // stop the tour whenever we land on any other slide, wherever we came from
+      if (vSlide && slides[i] !== vSlide) stopVideo();
       slides[cur].removeAttribute('data-active');
       thumbs[cur].removeAttribute('data-active');
       cur = i;
       slides[cur].setAttribute('data-active', '');
       thumbs[cur].setAttribute('data-active', '');
       replayProgress();
-      arm(DWELL);
+      clearTimer();                       // never leave the previous slide's timer running
+      if (slides[cur] === vSlide) playMuted(); else arm(DWELL);
     }
     function pause() {
       if (paused) return;
@@ -183,10 +219,98 @@
       gal.classList.add('is-paused');
     }
     function resume() {
-      if (!paused) return;
+      if (!paused || videoLock) return;   // never slide away from a video that's playing
       paused = false;
       gal.classList.remove('is-paused');
       arm(remaining);              // finishes the leftover of the current slide
+    }
+
+    if (video) {
+      // the tour plays silently on its own; sound is only ever turned on deliberately
+      function fmt(s) {
+        if (!isFinite(s)) return '0:00';
+        s = Math.max(0, Math.floor(s));
+        return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+      }
+      function engage() {                  // reveal our own player bar
+        vSlide.classList.add('is-video-playing');
+        if (video.paused) { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+      }
+      function setSound(on) {
+        video.muted = !on;
+        if (on) engage();
+        if (soundBtn) {
+          soundBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+          soundBtn.setAttribute('aria-label', on ? 'Mute the academy tour' : 'Turn on sound for the academy tour');
+          var l = soundBtn.querySelector('span'); if (l) l.textContent = on ? 'Sound on' : 'Tap for sound';
+        }
+      }
+      if (soundBtn) soundBtn.addEventListener('click', function (ev) { ev.stopPropagation(); setSound(video.muted); });
+      // clicking the picture turns sound on, which is what people try first;
+      // once the bar is up, a click is a play/pause toggle like any other player
+      video.addEventListener('click', function () {
+        if (!vSlide.classList.contains('is-video-playing')) { setSound(true); return; }
+        if (video.paused) video.play(); else video.pause();
+      });
+
+      if (vpPlay) vpPlay.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        if (video.paused) video.play(); else video.pause();
+      });
+      if (vpFull) vpFull.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        var el = vSlide, req = el.requestFullscreen || el.webkitRequestFullscreen;
+        if (document.fullscreenElement) document.exitFullscreen();
+        else if (req) req.call(el);
+      });
+      if (vpSeek) {
+        function seekTo() {
+          if (!isFinite(video.duration)) return;
+          video.currentTime = (vpSeek.value / 1000) * video.duration;
+        }
+        // pointerdown/up bracket the drag so the timeupdate handler stops fighting the thumb
+        vpSeek.addEventListener('pointerdown', function (ev) { ev.stopPropagation(); scrubbing = true; });
+        vpSeek.addEventListener('input', function () {
+          vpSeek.style.setProperty('--vp-pct', (vpSeek.value / 10) + '%');
+          if (isFinite(video.duration) && vpCur) vpCur.textContent = fmt((vpSeek.value / 1000) * video.duration);
+        });
+        vpSeek.addEventListener('change', function () { seekTo(); scrubbing = false; });
+        window.addEventListener('pointerup', function () { if (scrubbing) { seekTo(); scrubbing = false; } });
+        vpSeek.addEventListener('click', function (ev) { ev.stopPropagation(); });
+      }
+      video.addEventListener('loadedmetadata', function () { if (vpDur) vpDur.textContent = fmt(video.duration); });
+      video.addEventListener('timeupdate', function () {
+        if (scrubbing || !isFinite(video.duration) || !video.duration) return;
+        var pct = (video.currentTime / video.duration) * 1000;
+        if (vpSeek) { vpSeek.value = pct; vpSeek.style.setProperty('--vp-pct', (pct / 10) + '%'); }
+        if (vpCur) vpCur.textContent = fmt(video.currentTime);
+      });
+
+      video.addEventListener('play', function () {
+        videoLock = true;
+        clearTimer();
+        vSlide.classList.remove('is-paused-video');
+        if (vpPlay) vpPlay.setAttribute('aria-label', 'Pause');
+      });
+      video.addEventListener('ended', function () { videoLock = false; go(cur + 1); });
+      // if playback stalls or the browser blocks it, don't strand the carousel on a frozen slide
+      video.addEventListener('pause', function () {
+        vSlide.classList.add('is-paused-video');
+        if (vpPlay) vpPlay.setAttribute('aria-label', 'Play');
+        // once the bar is up the viewer is in charge — never slide out from under them.
+        // only a stalled/blocked passive autoplay releases the carousel.
+        if (video.ended || vSlide.classList.contains('is-video-playing')) return;
+        videoLock = false;
+        arm(DWELL);
+      });
+
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (entries) {
+          inView = entries[0].isIntersecting;
+          if (inView) playMuted();
+          else if (!video.paused) { video.pause(); videoLock = false; }
+        }, { threshold: 0.35 }).observe(gal);
+      } else { inView = true; }
     }
 
     if (prevBtn) prevBtn.addEventListener('click', function () { go(cur - 1); });
@@ -208,9 +332,13 @@
     var stage = gal.querySelector('.gal-stage');
     var downX = null;
     if (stage) {
-      stage.addEventListener('pointerdown', function (ev) { downX = ev.clientX; pause(); });
+      stage.addEventListener('pointerdown', function (ev) {
+        // never let a swipe steal a drag that belongs to the player bar
+        if (videoLock || (vp && vp.contains(ev.target))) return;
+        downX = ev.clientX; pause();
+      });
       window.addEventListener('pointerup', function (ev) {
-        if (downX === null) return;
+        if (downX === null || videoLock) return;
         var dx = ev.clientX - downX;
         downX = null;
         if (Math.abs(dx) > 42) go(cur + (dx < 0 ? 1 : -1));
@@ -223,7 +351,11 @@
       if (document.hidden) pause(); else resume();
     });
 
-    if (!reduce) { gal.classList.add('is-playing'); replayProgress(); arm(DWELL); }
+    if (!reduce) {
+      gal.classList.add('is-playing');
+      replayProgress();
+      if (slides[cur] !== vSlide) arm(DWELL);   // the video slide holds until the clip ends
+    }
   }
 
   document.addEventListener('DOMContentLoaded', function () {
