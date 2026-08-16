@@ -358,6 +358,51 @@
     }
   }
 
+  /* ---- hands-on method photo: plain two-image crossfade, no thumbnails ---- */
+  function initPhotoSwap() {
+    var ps = document.querySelector('[data-swap]');
+    if (!ps) return;
+    var imgs = Array.prototype.slice.call(ps.querySelectorAll('.ps-img'));
+    if (imgs.length < 2) return;
+    var frame = ps.closest('.photo-frame') || ps.parentNode;
+    var tag = frame.querySelector('.photo-tag-txt');
+    var dots = Array.prototype.slice.call(frame.querySelectorAll('.ps-dots i'));
+    var DWELL = 4200, i = 0, timer = null, held = false;
+
+    function show(n) {
+      n = ((n % imgs.length) + imgs.length) % imgs.length;
+      imgs[i].removeAttribute('data-active');
+      if (dots[i]) dots[i].removeAttribute('data-active');
+      i = n;
+      imgs[i].setAttribute('data-active', '');
+      if (dots[i]) dots[i].setAttribute('data-active', '');
+      // blurred backdrop only behind the portrait shot
+      ps.classList.toggle('is-portrait', imgs[i].classList.contains('ps-img--portrait'));
+      if (tag) {
+        tag.classList.add('is-fading');
+        setTimeout(function () {
+          tag.textContent = imgs[i].getAttribute('data-tag') || '';
+          tag.classList.remove('is-fading');
+        }, 350);
+      }
+    }
+    function arm() { clearTimeout(timer); if (!held) timer = setTimeout(function () { show(i + 1); arm(); }, DWELL); }
+
+    frame.addEventListener('mouseenter', function () { held = true; clearTimeout(timer); });
+    frame.addEventListener('mouseleave', function () { held = false; arm(); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { held = true; clearTimeout(timer); } else { held = false; arm(); }
+    });
+
+    if (reduce) return;              // no auto-cycling for reduced-motion visitors
+    arm();                           // start regardless; the observer below only parks it off-screen
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) {
+        if (e[0].isIntersecting) { held = false; arm(); } else { held = true; clearTimeout(timer); }
+      }, { threshold: 0.25 }).observe(frame);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initReveal();
     initNav();
@@ -365,6 +410,7 @@
     initTilt();
     initParallax();
     initGallery();
+    initPhotoSwap();
     openCourseFromHash();
   });
   window.addEventListener('hashchange', openCourseFromHash);
